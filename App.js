@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
-import {View, Text, TextInput, Switch, TouchableOpacity} from 'react-native';
+import {
+        View, 
+        Text, 
+        TextInput, 
+        Switch, 
+        TouchableOpacity} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import Slider from '@react-native-community/slider';
 
@@ -26,7 +31,7 @@ class App extends Component {
 
     return (
       <View>
-        <Text>Banco</Text>
+        <Text>Banco</Text>        
         <TextInput
           placeholder="Digite seu nome..."
           value={this.state.name}
@@ -34,35 +39,37 @@ class App extends Component {
         />
         <TextInput
           placeholder="Idade..."
-          value={this.state.age !== null ? this.state.age.toString() : ''}
+          value={this.state.age}
           keyboardType="numeric"
-          onChangeText={age => this.setState({age: parseInt(age) || null})}
+          onChangeText={age => this.setState({age})}
         />
         <Picker
-          selectedValue={this.state.genderSelected}
-          onValueChange={genderItem =>
-            this.setState({genderSelected: genderItem})
+          selectedValue={this.state.genderSelected.gender}
+          onValueChange={(itemValue, itemIndex ) =>
+            this.setState({genderSelected: itemValue})
           }>
+          <Picker.Item label="Escolher " value="" enabled={false} />
           {genderItem}
+
         </Picker>
 
         <Slider
           minimumValue={0}
           maximumValue={10000}
-          onValueChange={valueSelected =>
-            this.setState({accountlimit: valueSelected})
+          onValueChange={limitSelected =>
+            this.setState({accountlimit: limitSelected})
           }
-          value={this.state.value}
-        />
-
-        <Switch
-          value={this.state.student}
-          onValueChange={switchValue => this.setState({student: switchValue})}
+          value={this.state.accountlimit}
         />
 
         <Text>
           Seu limite {this.state.accountlimit.toFixed(0)}
         </Text>
+
+        <Switch
+          value={this.state.student}
+          onValueChange={switchValue => this.setState({student: switchValue})}
+        />
 
         <TouchableOpacity>
           <Text>Criar Conta</Text>
