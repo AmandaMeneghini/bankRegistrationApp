@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
 import {
-        View, 
-        Text, 
-        TextInput, 
-        Switch, 
-        TouchableOpacity} from 'react-native';
+  View,
+  Text,
+  TextInput,
+  Switch,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import Slider from '@react-native-community/slider';
 
@@ -30,53 +33,158 @@ class App extends Component {
     });
 
     return (
-      <View>
-        <Text>Banco</Text>        
-        <TextInput
-          placeholder="Digite seu nome..."
-          value={this.state.name}
-          onChangeText={name => this.setState({name})}
-        />
-        <TextInput
-          placeholder="Idade..."
-          value={this.state.age}
-          keyboardType="numeric"
-          onChangeText={age => this.setState({age})}
-        />
-        <Picker
-          selectedValue={this.state.genderSelected.gender}
-          onValueChange={(itemValue, itemIndex ) =>
-            this.setState({genderSelected: itemValue})
-          }>
-          <Picker.Item label="Escolher " value="" enabled={false} />
-          {genderItem}
+      <View style={styles.container}>
+        <View style={styles.logo}>
+          <Image
+            style={styles.logoIcon}
+            source={require('./src/images/piggy-icon.png')}
+          />
+          <Text style={styles.logoText}>Native Bank</Text>
+        </View>
 
-        </Picker>
+        <View style={styles.block}>
+          <View style={styles.inputs}>
+            <TextInput
+              style={styles.inputText}
+              placeholder="Nome"
+              value={this.state.name}
+              onChangeText={name => this.setState({name})}
+            />
 
-        <Slider
-          minimumValue={0}
-          maximumValue={10000}
-          onValueChange={limitSelected =>
-            this.setState({accountlimit: limitSelected})
-          }
-          value={this.state.accountlimit}
-        />
+            <TextInput
+              style={styles.inputText}
+              placeholder="Idade"
+              value={this.state.age}
+              keyboardType="numeric"
+              onChangeText={age => this.setState({age})}
+            />
 
-        <Text>
-          Seu limite {this.state.accountlimit.toFixed(0)}
-        </Text>
+            <View style={styles.select}>
+              <Picker
+                selectedValue={this.state.genderSelected.gender}
+                onValueChange={(itemValue, itemIndex) =>
+                  this.setState({genderSelected: itemValue})
+                }>
+                <Picker.Item label="Sexo " value="" enabled={false} />
+                {genderItem}
+              </Picker>
+            </View>
+          </View>
 
-        <Switch
-          value={this.state.student}
-          onValueChange={switchValue => this.setState({student: switchValue})}
-        />
+          <View styles={styles.finish}>
+            <View style={styles.limitTextArea}>
+              <Text style={styles.label}>Limite da conta</Text>
 
-        <TouchableOpacity>
-          <Text>Criar Conta</Text>
-        </TouchableOpacity>
+              <Text>R${this.state.accountlimit.toFixed(0)}</Text>
+            </View>
+            <Slider
+              minimumValue={0}
+              maximumValue={10000}
+              minimumTrackTintColor="#4ECA6C"
+              thumbTintColor="#4ECA6C"
+              onValueChange={limitSelected =>
+                this.setState({accountlimit: limitSelected})
+              }
+              value={this.state.accountlimit}
+            />
+
+            <View style={styles.switch}>
+              <Text style={styles.label}>
+                {this.state.student ? 'Sou' : 'Não sou'} estudante
+              </Text>
+              <Switch
+                thumbColor={this.state.student ? '#4ECA6C' : '#E4AB0A'}
+                style={styles.switch}
+                value={this.state.student}
+                onValueChange={switchValue =>
+                  this.setState({student: switchValue})
+                }
+              />
+            </View>
+          </View>
+
+          <TouchableOpacity style={styles.btn}>
+            <Text style={styles.btnText}>Criar Conta</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#4ECA6C',
+    padding: 30,
+    justifyContent: 'space-evenly',
+  },
+  logo: {
+    flexDirection: 'row',
+    textAlign: 'center',
+    margin: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+  },
+  logoIcon: {
+    width: 40,
+    height: 40,
+  },
+  logoText: {
+    color: '#fff',
+    fontSize: 32,
+    fontWeight: 'bold',
+  },
+  block: {
+    backgroundColor: '#fff',
+    paddingTop: 50,
+    paddingRight: 25,
+    paddingLeft: 25,
+    paddingBottom: 40,
+    borderRadius: 30,
+    gap: 30,
+  },
+  inputs: {
+    gap: 15,
+  },
+  limitTextArea: {
+    marginBottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  inputText: {
+    backgroundColor: '#deded9',
+    borderRadius: 15,
+    padding: 15,
+  },
+  label: {
+    marginLeft: 5,
+    fontSize: 14,
+    color: '#686663',
+  },
+  select: {
+    borderWidth: 1.5,
+    borderRadius: 15,
+    borderColor: '#b2b0ab',
+    paddingLeft: 5,
+  },
+  switch: {
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  btn: {
+    backgroundColor: '#3258C3',
+    alignItems: 'center',
+    padding: 15,
+    borderRadius: 15,
+    marginTop: 20,
+  },
+  btnText: {
+    color: '#eee',
+  },
+});
 
 export default App;
