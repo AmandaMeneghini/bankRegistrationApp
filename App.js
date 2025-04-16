@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
+  Alert,
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import Slider from '@react-native-community/slider';
@@ -25,6 +26,26 @@ class App extends Component {
       accountlimit: 0,
       student: false,
     };
+
+    this.showData = this.showData.bind(this);
+  }
+
+  showData() {
+    if (
+      this.state.name &&
+      this.state.age &&
+      this.state.genderSelected &&
+      this.state.accountlimit != ''
+    ) {
+      alert(`Conta Criada com sucesso!\n
+            Nome: ${this.state.name}\n
+            Idade: ${this.state.age}\n
+            Sexo: ${this.state.genderSelected.gender}\n
+            Limite da conta: ${this.state.accountlimit.toFixed(0)}\n
+            Estudante: ${this.state.student ? `Sim` : `Não`}`);
+    } else {
+      alert('Campos preenchidos incorretamentes');
+    }
   }
 
   render() {
@@ -61,7 +82,7 @@ class App extends Component {
 
             <View style={styles.select}>
               <Picker
-                selectedValue={this.state.genderSelected.gender}
+                selectedValue={this.state.genderSelected}
                 onValueChange={(itemValue, itemIndex) =>
                   this.setState({genderSelected: itemValue})
                 }>
@@ -103,7 +124,7 @@ class App extends Component {
             </View>
           </View>
 
-          <TouchableOpacity style={styles.btn}>
+          <TouchableOpacity style={styles.btn} onPress={this.showData}>
             <Text style={styles.btnText}>Criar Conta</Text>
           </TouchableOpacity>
         </View>
