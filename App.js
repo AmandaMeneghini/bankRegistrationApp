@@ -37,14 +37,14 @@ class App extends Component {
       this.state.genderSelected &&
       this.state.accountlimit != ''
     ) {
-      alert(`Conta Criada com sucesso!\n
+      alert(`Conta criada com sucesso!\n
             Nome: ${this.state.name}\n
             Idade: ${this.state.age}\n
             Sexo: ${this.state.genderSelected.gender}\n
             Limite da conta: ${this.state.accountlimit.toFixed(0)}\n
             Estudante: ${this.state.student ? `Sim` : `Não`}`);
     } else {
-      alert('Campos preenchidos incorretamentes');
+      alert('Campos preenchidos incorretamente');
     }
   }
 
